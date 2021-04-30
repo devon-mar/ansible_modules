@@ -111,32 +111,6 @@ DOCUMENTATION = """
         group_by:
             description: Keys used to create groups. The I(plurals) option controls which of these are valid.
             type: list
-            choices:
-                - sites
-                - site
-                - tenants
-                - tenant
-                - racks
-                - rack
-                - rack_group
-                - rack_role
-                - tags
-                - tag
-                - device_roles
-                - role
-                - device_types
-                - device_type
-                - manufacturers
-                - manufacturer
-                - platforms
-                - platform
-                - region
-                - cluster
-                - cluster_type
-                - cluster_group
-                - is_virtual
-                - services
-                - status
             default: []
         group_names_raw:
             description: Will not add the group_by choice name to the group names
@@ -812,7 +786,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         self.racks_role_lookup = dict(map(get_role_for_rack, racks))
 
     def refresh_rack_groups_lookup(self):
-        url = self.api_endpoint + "/api/dcim/rack-groups/?limit=0"
+        url = self.api_endpoint + "/api/dcim/locations/?limit=0"
         rack_groups = self.get_resource_list(api_url=url)
         self.rack_groups_lookup = dict(
             (rack_group["id"], rack_group["slug"]) for rack_group in rack_groups
